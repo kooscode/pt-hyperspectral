@@ -1,6 +1,6 @@
 # pt-hyperspectral
 
-Sample Demo app to use PyTorch C++ frontend to analyze Hyperspectral spectroscopy data to detect objects in specific bands.
+Sample app to use PyTorch C++ frontend to train a basic neural network for analyzing Hyperspectral spectroscopy data to detect objects in specific bands.
 
 Folder Structures
 ------------------
