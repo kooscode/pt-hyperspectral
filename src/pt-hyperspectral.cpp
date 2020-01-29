@@ -57,19 +57,19 @@ int main(int argc, char **argv)
     // bands.push_back(rededge);
 
     // //Custom Bands
-    band_spec b360 = {"360", 0, 359, 361}; 
+    band_spec b360 = {"A", 0, 459, 461}; 
     bands.push_back(b360);
-    band_spec b429 = {"429", 1, 428, 430}; 
+    band_spec b429 = {"B", 1, 528, 530}; 
     bands.push_back(b429);
-    band_spec b580 = {"580", 2, 579, 581}; 
+    band_spec b580 = {"C", 2, 679, 681}; 
     bands.push_back(b580);
-    band_spec b839 = {"839", 3, 838, 840}; 
+    band_spec b839 = {"D", 3, 938, 940}; 
     bands.push_back(b839);
-    band_spec b1028 = {"1028", 4, 1027, 1029}; 
+    band_spec b1028 = {"E", 4, 1127, 1129}; 
     bands.push_back(b1028);
-    band_spec b1442 = {"1442", 5, 1441, 1443}; 
+    band_spec b1442 = {"F", 5, 1541, 1543}; 
     bands.push_back(b1442);
-    band_spec b2279 = {"2279", 6, 2278, 2280}; 
+    band_spec b2279 = {"G", 6, 2378, 2380}; 
     bands.push_back(b2279);
 
 
