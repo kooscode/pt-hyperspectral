@@ -4,7 +4,8 @@ APP=pt-hyperspectral
 CXX=g++
 SRC_MAIN=src
 OUT_DIR=bin
-
+CPP_STD=c++14
+ 
 #extra paths
 LIB_TC=../libterraclear/src
 LIB_TORCH1=/data/software/libtorch/include
@@ -32,7 +33,7 @@ LIBS_PARAMS=$(foreach d, $(LIBS), -l$d)
 #compile
 $(APP): $(SRC_MAIN)/$(APP).cpp 
 	test -d bin || mkdir -p bin
-	$(CXX) $(SRC_MAIN)/$(APP).cpp $(SRC_EXT) -o $(OUT_DIR)/$(APP) $(INC_PARAMS) $(LIB_PATH_PARAMS) $(LIBS_PARAMS) -g -O0
+	$(CXX) -std=$(CPP_STD) $(SRC_MAIN)/$(APP).cpp $(SRC_EXT) -o $(OUT_DIR)/$(APP) $(INC_PARAMS) $(LIB_PATH_PARAMS) $(LIBS_PARAMS) -g -O0
 
 clean:
 	rm -rf bin

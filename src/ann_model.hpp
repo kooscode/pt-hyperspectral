@@ -6,7 +6,7 @@ struct ann_model : torch::nn::Module
     ann_model() 
     {
         // construct and register your layers
-        fc1 = register_module("fc1",torch::nn::Linear(7, 128));
+        fc1 = register_module("fc1",torch::nn::Linear(5, 128));
         fc2 = register_module("fc2",torch::nn::Linear(128, 32));
         fc3 = register_module("fc3",torch::nn::Linear(32, 2));
     }

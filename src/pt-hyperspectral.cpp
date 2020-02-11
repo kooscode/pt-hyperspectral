@@ -45,32 +45,54 @@ int main(int argc, char **argv)
     std::vector<band_spec> bands;
 
     // //Micasense Altum Bands
-    // band_spec red = {"red", 0, 465, 485};          //475 center, 20 width
-    // bands.push_back(red);
-    // band_spec green = {"green", 1, 550, 570};      //560 center, 20 width
-    // bands.push_back(green);
-    // band_spec blue = {"blue", 2, 663, 673};        //668 center, 10 width
-    // bands.push_back(blue);
-    // band_spec nir = {"nir", 3, 712, 722};          //717 center, 10 width
-    // bands.push_back(nir);
-    // band_spec rededge = {"rededge", 4, 820, 860};  //840 center, 40 width
-    // bands.push_back(rededge);
+    band_spec blue = {"blue", 0, 465, 485};          //475 center, 20 width
+    bands.push_back(blue);
+    band_spec green = {"green", 1, 550, 570};      //560 center, 20 width
+    bands.push_back(green);
+    band_spec red = {"red", 2, 663, 673};        //668 center, 10 width
+    bands.push_back(red);
+    band_spec rededge = {"rededge", 3, 712, 722};          //717 center, 10 width
+    bands.push_back(rededge);
+    band_spec nir = {"nir", 4, 820, 860};  //840 center, 40 width
+    bands.push_back(nir);
 
-    // //Custom Bands
-    band_spec b360 = {"360", 0, 359, 361}; 
-    bands.push_back(b360);
-    band_spec b429 = {"429", 1, 428, 430}; 
-    bands.push_back(b429);
-    band_spec b580 = {"580", 2, 579, 581}; 
-    bands.push_back(b580);
-    band_spec b839 = {"839", 3, 838, 840}; 
-    bands.push_back(b839);
-    band_spec b1028 = {"1028", 4, 1027, 1029}; 
-    bands.push_back(b1028);
-    band_spec b1442 = {"1442", 5, 1441, 1443}; 
-    bands.push_back(b1442);
-    band_spec b2279 = {"2279", 6, 2278, 2280}; 
-    bands.push_back(b2279);
+    //Micasense Dual RedEdge.MX Bands
+    // band_spec blue_coastal = {"blue_coastal", 0, 430, 458};         //444 center, 28 width
+    // bands.push_back(blue_coastal);
+    // band_spec blue = {"blue", 1, 459, 491};                         //475 center, 32 width
+    // bands.push_back(blue);
+    // band_spec green_coastal = {"green-coastal", 2, 524, 538};       //531 center,14 width
+    // bands.push_back(green_coastal);
+    // band_spec green = {"green", 3, 546, 573};                       //560 center, 27 width
+    // bands.push_back(green);
+    // band_spec red_coastal = {"red_coastal", 4, 642, 658};           //650 center, 16 width
+    // bands.push_back(red_coastal);
+    // band_spec red = {"red", 5, 661, 675};                           //668 center, 14 width
+    // bands.push_back(red);
+    // band_spec rededge_coastal = {"rededge_coastal", 6, 700, 710};   //705 center, 10 width
+    // bands.push_back(rededge_coastal);
+    // band_spec rededge = {"rededge", 7, 711, 723};                   //717 center, 12 width
+    // bands.push_back(rededge);
+    // band_spec rededge2 = {"rededge2", 8, 731, 749};                 //740 center, 18 width
+    // bands.push_back(rededge2);
+    // band_spec nir = {"nir", 9, 813, 870};                           //842 center, 57 width
+    // bands.push_back(nir);
+
+    // // //Custom Bands
+    // band_spec b360 = {"360", 0, 359, 361}; 
+    // bands.push_back(b360);
+    // band_spec b429 = {"429", 1, 428, 430}; 
+    // bands.push_back(b429);
+    // band_spec b580 = {"580", 2, 579, 581}; 
+    // bands.push_back(b580);
+    // band_spec b839 = {"839", 3, 838, 840}; 
+    // bands.push_back(b839);
+    // band_spec b1028 = {"1028", 4, 1027, 1029}; 
+    // bands.push_back(b1028);
+    // band_spec b1442 = {"1442", 5, 1441, 1443}; 
+    // bands.push_back(b1442);
+    // band_spec b2279 = {"2279", 6, 2278, 2280}; 
+    // bands.push_back(b2279);
 
 
     //which collumn contains class types
@@ -85,6 +107,7 @@ int main(int argc, char **argv)
     map_label_class["Rock"] = class1;
     map_label_class["Soil"] = class2;
     map_label_class["Crop Residue"] = class2;
+    map_label_class["NotRock"] = class2;
 
     //band to collumn index mapping
     std::map<uint32_t, uint32_t> map_band_index;
@@ -94,7 +117,9 @@ int main(int argc, char **argv)
     std::vector<class_row> rows;
     std::vector<class_row> rows_test;
 
-    std::string csv_file = "/data/ml/datasets/hyperspectral/terraclear/TerraClear_Spectrometer_Data.csv";
+//    std::string csv_file = "/data/ml/datasets/hyperspectral/terraclear/TerraClear_Spectrometer_Data.csv";
+    std::string csv_file = "/home/koos/Desktop/allovernorm.csv";
+
     if (!tc::filetools::file_exists(csv_file))
     {
         std::cout << "CSV not found" << std::endl;
@@ -132,6 +157,7 @@ int main(int argc, char **argv)
                 if (col_val.find(class_col_name) !=std::string::npos)
                 {
                     class_col_index = col_num;
+                    std::cout << class_col_name << "=" << col_num << std::endl;
                 }
                 else
                 {
@@ -140,6 +166,7 @@ int main(int argc, char **argv)
                     {
                         uint32_t freq = std::stoul(col_val);
                         map_band_index[freq] = col_num;
+                        std::cout << freq << "nm=" << col_num << std::endl;
                     }
                     catch(const std::invalid_argument& e)
                     {
@@ -152,10 +179,9 @@ int main(int argc, char **argv)
         }
         else
         {
-            //contains keyword..
             // if (class_string.find("Rock") !=std::string::npos)
             std::string class_string = col_vals.at(class_col_index);
-            class_string = class_string.substr(0, class_string.length()-1); 
+            // class_string = class_string.substr(0, class_string.length()-1); 
 
             //is this a class we are interrested in, if so, grab it and calc vals.
             if  (map_label_class.count(class_string) > 0)    
@@ -243,12 +269,13 @@ int main(int argc, char **argv)
     float* truth_ptr = truth_cpu.accessor<float, 1>().data();
 
     //run through all rows for X epochs
-    int batch_size = 10;
+    int batch_size = 800;//10;
     int batch_current = 0;
     int batch_count = 0;
     float avg_loss = 0.0f;
-    float epoch_max = 700;
+    float epoch_max = 100;//700;
     float epoch_map_calc = 50;
+    float learning_Rate = 0.0001;//0.001;
     std::string model_file = "hyperspectral.pt";
 
     if (tc::filetools::file_exists(model_file))
@@ -259,10 +286,11 @@ int main(int argc, char **argv)
     else
     {
 
-    std::cout << "Training..." << std::endl;
+    std::cout << "Training... [max epoch=" << epoch_max << "]" << std::endl;
     //Create SGD optimizer with specific learning rate
     //    torch::optim::SGD optimizer(net_ptr->parameters(), /*lr=*/0.01);
-    torch::optim::Adam optimizer(net_ptr->parameters(), /*lr=*/0.001);
+
+    torch::optim::Adam optimizer(net_ptr->parameters(), /*lr=*/learning_Rate);
 
         for (int epoch = 0; epoch < epoch_max; epoch++)
         {
@@ -370,7 +398,7 @@ int main(int argc, char **argv)
     float recall = tp / (tp + fn);
     float mAP = tp / (tp + fn + fp);
 
-    std::cout << "\tRows:" << batch_current << ", Recall:" << recall << "%, mAP:" << mAP <<"%, Loss:" << avg_loss << std::endl << std::flush;
+    std::cout << "\tRows:" << batch_current << ", Recall:" << recall << ", mAP:" << mAP <<", Loss:" << avg_loss << std::endl << std::flush;
 
 
     return 0;
