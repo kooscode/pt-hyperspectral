@@ -78,23 +78,6 @@ int main(int argc, char **argv)
     // band_spec nir = {"nir", 9, 813, 870};                           //842 center, 57 width
     // bands.push_back(nir);
 
-    // // //Custom Bands
-    // band_spec b360 = {"360", 0, 359, 361}; 
-    // bands.push_back(b360);
-    // band_spec b429 = {"429", 1, 428, 430}; 
-    // bands.push_back(b429);
-    // band_spec b580 = {"580", 2, 579, 581}; 
-    // bands.push_back(b580);
-    // band_spec b839 = {"839", 3, 838, 840}; 
-    // bands.push_back(b839);
-    // band_spec b1028 = {"1028", 4, 1027, 1029}; 
-    // bands.push_back(b1028);
-    // band_spec b1442 = {"1442", 5, 1441, 1443}; 
-    // bands.push_back(b1442);
-    // band_spec b2279 = {"2279", 6, 2278, 2280}; 
-    // bands.push_back(b2279);
-
-
     //which collumn contains class types
     uint32_t class_col_index = 0;
     std::string class_col_name = "labels";
