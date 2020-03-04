@@ -37,6 +37,19 @@ struct class_row
     std::vector<band_val> band_values;
 };
 
+void removeWhiteSpaces(std::string& stringref)
+{
+    //remove empty spaces.
+    std::string::iterator end_pos = std::remove(stringref.begin(), stringref.end(), ' ');
+    stringref.erase(end_pos, stringref.end());
+
+    end_pos = std::remove(stringref.begin(), stringref.end(), '\n');
+    stringref.erase(end_pos, stringref.end());
+
+    end_pos = std::remove(stringref.begin(), stringref.end(), '\r');
+    stringref.erase(end_pos, stringref.end());
+}
+
 int main(int argc, char **argv) 
 {
     std::cout << "Processing CSV..." << std::endl << std::flush;
@@ -78,6 +91,23 @@ int main(int argc, char **argv)
     // band_spec nir = {"nir", 9, 813, 870};                           //842 center, 57 width
     // bands.push_back(nir);
 
+
+    // // //Custom Bands
+    // band_spec b360 = {"360", 0, 359, 361}; 
+    // bands.push_back(b360);
+    // band_spec b429 = {"429", 1, 428, 430}; 
+    // bands.push_back(b429);
+    // band_spec b580 = {"580", 2, 579, 581}; 
+    // bands.push_back(b580);
+    // band_spec b839 = {"839", 3, 838, 840}; 
+    // bands.push_back(b839);
+    // band_spec b1028 = {"1028", 4, 1027, 1029}; 
+    // bands.push_back(b1028);
+    // band_spec b1442 = {"1442", 5, 1441, 1443}; 
+    // bands.push_back(b1442);
+    // band_spec b2279 = {"2279", 6, 2278, 2280}; 
+    // bands.push_back(b2279);
+
     //which collumn contains class types
     uint32_t class_col_index = 0;
     std::string class_col_name = "labels";
@@ -100,8 +130,8 @@ int main(int argc, char **argv)
     std::vector<class_row> rows;
     std::vector<class_row> rows_test;
 
-//    std::string csv_file = "/data/ml/datasets/hyperspectral/terraclear/TerraClear_Spectrometer_Data.csv";
-    std::string csv_file = "/home/koos/Desktop/allovernorm.csv";
+   std::string csv_file = "/data/ml/datasets/hyperspectral/terraclear/spectrometer/TerraClear_Spectrometer_Data.csv";
+    // std::string csv_file = "/home/koos/Desktop/allovernorm.csv";
 
     if (!tc::filetools::file_exists(csv_file))
     {
@@ -137,10 +167,10 @@ int main(int argc, char **argv)
             for (std::string col_val : col_vals)
             {
                 //find class name collumn..
-                if (col_val.find(class_col_name) !=std::string::npos)
+                if (col_val.find(class_col_name) != std::string::npos)
                 {
                     class_col_index = col_num;
-                    std::cout << class_col_name << "=" << col_num << std::endl;
+                    // std::cout << class_col_name << "=" << col_num << std::endl;
                 }
                 else
                 {
@@ -149,7 +179,7 @@ int main(int argc, char **argv)
                     {
                         uint32_t freq = std::stoul(col_val);
                         map_band_index[freq] = col_num;
-                        std::cout << freq << "nm=" << col_num << std::endl;
+                        // std::cout << freq << "nm=" << col_num << std::endl;
                     }
                     catch(const std::invalid_argument& e)
                     {
@@ -162,9 +192,8 @@ int main(int argc, char **argv)
         }
         else
         {
-            // if (class_string.find("Rock") !=std::string::npos)
             std::string class_string = col_vals.at(class_col_index);
-            // class_string = class_string.substr(0, class_string.length()-1); 
+            removeWhiteSpaces(class_string);
 
             //is this a class we are interrested in, if so, grab it and calc vals.
             if  (map_label_class.count(class_string) > 0)    
